@@ -136,12 +136,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="filters.cpp" />
+    <ClCompile Include="ImageEditorActions.cpp" />
     <ClCompile Include="inputoutput.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="filters.h" />
+    <ClInclude Include="ImageEditorActions.h" />
     <ClInclude Include="inputoutput.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="stb_image.h" />

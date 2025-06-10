@@ -1,6 +1,6 @@
+#include "ImageEditorActions.h"
 #include "interface.h"
 #include "inputoutput.h"
-#include "filters.h"
 #include <iostream>
 #include <string>
 
@@ -40,33 +40,19 @@ int main()
         switch (option)
         {
         case 1:
-            {
-            int brightness{ getIntFromUser("Enter brightness value ") };
-            adjustBrightness(imgData, width, height, channels, brightness);
-            }
+            increaseBrightness(imgData, width, height, channels);
             break;
         case 6:
-            {
-            int red{ getRGBValueFromUser("Enter red value ( must be between 0 and 255 ) ") };
-            int green{ getRGBValueFromUser("Enter green value ( must be between 0 and 255 ) ") };
-            int blue{ getRGBValueFromUser("Enter blue value ( must be between 0 and 255 ) ") };
-            addRGBFilter(imgData, width, height, channels, red, green, blue);
-            }
+            applyColorTint(imgData, width, height, channels);
             break;
         case -7:
-            std::memcpy(imgData, imgDataCopy, size);
-            std::cout << "Reset edits\n";
+            resetEdits(imgData, imgDataCopy, size);
             break;
         case -8:
-            {
-            std::string outputName{ getStringFromUser("Enter output file name ") };
-            writeImage(outputName, ".png", imgData, width, height, channels);
-            openImage(outputName + ".png");
-            }
+            saveImage(imgData, width, height, channels);
             break;
         case -1:
-            editing = false;
-            std::cout << "Exiting program...\n";
+            editing = exitProgram();
             break;
         default:
             std::cout << "Invalid option\n";

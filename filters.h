@@ -5,6 +5,4 @@
 
 void addRGBFilter(unsigned char* imgData, int width, int height, int channels, int red, int green, int blue);
 
-void adjustBrightness(unsigned char* imgData, int width, int height, int channels, int brightness);
-
 #endif#

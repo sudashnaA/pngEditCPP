@@ -5,6 +5,7 @@
 
 images/
 *.png
+.gitignore
 
 # User-specific files
 *.rsuser
