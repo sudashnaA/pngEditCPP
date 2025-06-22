@@ -135,19 +135,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleUI.cpp" />
+    <ClCompile Include="Editor.cpp" />
     <ClCompile Include="filters.cpp" />
+    <ClCompile Include="imagePNG.cpp" />
     <ClCompile Include="ImageEditorActions.cpp" />
-    <ClCompile Include="inputoutput.cpp" />
-    <ClCompile Include="interface.cpp" />
+    <ClCompile Include="ImageProcessor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConsoleUI.h" />
+    <ClInclude Include="Editor.h" />
     <ClInclude Include="filters.h" />
+    <ClInclude Include="imagePNG.h" />
     <ClInclude Include="ImageEditorActions.h" />
-    <ClInclude Include="inputoutput.h" />
-    <ClInclude Include="interface.h" />
+    <ClInclude Include="ImageProcessor.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

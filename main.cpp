@@ -1,68 +1,72 @@
+#include "imagePNG.h"
+#include "Editor.h"
+#include "ConsoleUI.h"
+#include "ImageProcessor.h"
 #include "ImageEditorActions.h"
-#include "interface.h"
 #include "inputoutput.h"
 #include <iostream>
+#include <memory>
 #include <string>
-
-constexpr int MIN_OPTION = 1;
-constexpr int MAX_OPTION = 9;
 
 int main()
 {
-    int height{};
-    int width{};
-    int channels{};
+    auto editor{ std::make_unique<Editor>() };
+    auto consoleUI{ std::make_unique<ConsoleUI>() };
 
-    unsigned char* imgData{};
-
-    selectImage(imgData, &width, &height, &channels);
-
-    size_t size{ static_cast<size_t>(width * height * channels) };
-    unsigned char* imgDataCopy = new unsigned char[size];
-
-    if (!imgData || size <= 0) 
-    {
-        std::cerr << "Failed to allocate or copy image data.\n";
-    }
-    else
-    {
-        std::memcpy(imgDataCopy, imgData, size);
-    }
-
+    std::string filePath{ consoleUI->getValidImagePathFromUser() };
+    // Read the image into memory
+    editor->readImage(filePath);
+   
     bool editing{ true };
-
     while (editing)
     {
-        displayEditingMenu();
+        auto imageProcessor{ std::make_unique<ImageProcessor>() };
 
-        int option{getIntFromUser("\nEnter an option\n")};
+        consoleUI->displayEditMenu();
+
+        int option{consoleUI->getIntFromUser("\nEnter an option\n")};
 
         switch (option)
         {
         case 1:
-            increaseBrightness(imgData, width, height, channels);
+        {
+            const int brightness{ consoleUI->getRGBValueFromUser("Enter brightness (0, 255) ") };
+            auto imageWithBrightnessAdjusted{ imageProcessor->adjustBrightness(editor->getLatestImage(), brightness) };
+
+            editor->addToImageEditsHistory(std::move(imageWithBrightnessAdjusted));
+        }
             break;
         case 6:
-            applyColorTint(imgData, width, height, channels);
+        {
+            const int red{ consoleUI->getRGBValueFromUser("Enter red value (0, 255) ") };
+            const int green{ consoleUI->getRGBValueFromUser("Enter green value (0, 255) ") };
+            const int blue{ consoleUI->getRGBValueFromUser("Enter blue value (0, 255) ") };
+            auto imageWithColorFilter{ imageProcessor->applyColorTint(editor->getLatestImage(), red, green, blue) };
+
+            editor->addToImageEditsHistory(std::move(imageWithColorFilter));
+        }
             break;
-        case -7:
-            resetEdits(imgData, imgDataCopy, size);
+        case 99:
+            editor->resetImageEditsHistory();
+            std::cout << "Reset all edits\n";
             break;
-        case -8:
-            saveImage(imgData, width, height, channels);
+        case 88:
+            editor->writeEdits();
+            editor->openImage(editor->getLatestImage()->getName());
             break;
-        case -1:
-            editing = exitProgram();
+        case 77:
+            editor->clearImageEditsHistory();
+            filePath = consoleUI->getValidImagePathFromUser();
+            editor->readImage(filePath);
+            break;
+        case 66:
+            editing = false;
             break;
         default:
             std::cout << "Invalid option\n";
             break;
         }
-
     }
-
-    delete[] imgData;
-    delete[] imgDataCopy;
 
     return 0;
 }
