@@ -36,6 +36,12 @@ int main()
             editor->addToImageEditsHistory(std::move(imageWithBrightnessAdjusted));
         }
             break;
+        case 4:
+        {
+            auto imageWithGrayscaleFilter{ imageProcessor->applyGrayscaleFilter(editor->getLatestImage()) };
+            editor->addToImageEditsHistory(std::move(imageWithGrayscaleFilter));
+        }
+            break;
         case 6:
         {
             const int red{ consoleUI->getRGBValueFromUser("Enter red value (0, 255) ") };

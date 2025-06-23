@@ -6,7 +6,7 @@
 
 class ImagePNG {
 public:
-	ImagePNG(std::string name, unsigned char* imgData, int height, int width, int channels);
+	ImagePNG(std::string_view name, std::vector<unsigned char>& imgData, int height, int width, int channels);
 	~ImagePNG();
 
 	const std::string& getName();

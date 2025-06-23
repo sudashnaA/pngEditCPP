@@ -2,9 +2,9 @@
 #include <vector>
 #include <string>
 
-ImagePNG::ImagePNG(std::string name, unsigned char* imgData, int height, int width, int channels) 
+ImagePNG::ImagePNG(std::string_view name, std::vector<unsigned char>& imgData, int height, int width, int channels) 
 	:
-	name(name), imgData(imgData, imgData + static_cast<size_t>(width*height*channels)), height(height), width(width), channels(channels), size(static_cast<size_t>(width* height* channels))
+	name(name), imgData(imgData), height(height), width(width), channels(channels), size(static_cast<size_t>(width* height* channels))
 {}
 
 ImagePNG::~ImagePNG(){

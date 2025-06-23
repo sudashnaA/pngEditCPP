@@ -1,4 +1,3 @@
-#include "utils.h"
 #include <algorithm>
 
 //void adjustHSV(unsigned char* imgData, int width, int height, int channels, int hue, int saturation, int value)
